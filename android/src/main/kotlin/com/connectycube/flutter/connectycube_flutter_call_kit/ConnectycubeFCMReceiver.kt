@@ -65,6 +65,11 @@ class ConnectycubeFCMReceiver : BroadcastReceiver() {
             return
         }
 
+          if (isApplicationForeground(applicationContext)) {
+            Log.d(TAG, "[processInviteCallEvent] skip showCallNotification because app is in foreground")
+            return
+        } 
+
         // if (callId == null || CALL_STATE_UNKNOWN != getCallState(
         //         applicationContext,
         //         callId
@@ -101,10 +106,7 @@ class ConnectycubeFCMReceiver : BroadcastReceiver() {
             userInfo
         )
 
-        if (isApplicationForeground(applicationContext)) {
-            Log.d(TAG, "[processInviteCallEvent] skip showCallNotification because app is in foreground")
-        } else {
-            showCallNotification(
+         showCallNotification(
                 applicationContext,
                 callId,
                 callType,
@@ -114,7 +116,6 @@ class ConnectycubeFCMReceiver : BroadcastReceiver() {
                 callPhoto,
                 userInfo
             )
-        }
 
         saveCallState(applicationContext, callId, CALL_STATE_PENDING)
         saveCallData(applicationContext, callId, data)
