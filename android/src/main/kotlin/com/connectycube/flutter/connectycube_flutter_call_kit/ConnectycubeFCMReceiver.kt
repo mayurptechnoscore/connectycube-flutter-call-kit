@@ -59,14 +59,14 @@ class ConnectycubeFCMReceiver : BroadcastReceiver() {
         Log.d(TAG, "[processInviteCallEvent]")
         val callId = data["session_id"]
 
-        if (callId == null || CALL_STATE_UNKNOWN != getCallState(
-                applicationContext,
-                callId
-            )
-        ) {
-            Log.d(TAG, "[processInviteCallEvent] callId == null || CALL_STATE_UNKNOWN != getCallState(applicationContext, callId)")
-            return
-        }
+        // if (callId == null || CALL_STATE_UNKNOWN != getCallState(
+        //         applicationContext,
+        //         callId
+        //     )
+        // ) {
+        //     Log.d(TAG, "[processInviteCallEvent] callId == null || CALL_STATE_UNKNOWN != getCallState(applicationContext, callId)")
+        //     return
+        // }
 
         val callType = data["call_type"]?.toInt()
         val callInitiatorId = data["caller_id"]?.toInt()
