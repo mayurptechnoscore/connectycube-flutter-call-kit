@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import com.connectycube.flutter.connectycube_flutter_call_kit.utils.ContextHolder
+import com.connectycube.flutter.connectycube_flutter_call_kit.utils.isApplicationForeground
 import com.google.firebase.messaging.RemoteMessage
 import org.json.JSONObject
 
@@ -99,17 +100,21 @@ class ConnectycubeFCMReceiver : BroadcastReceiver() {
             callPhoto,
             userInfo
         )
-            
-        showCallNotification(
-            applicationContext,
-            callId,
-            callType,
-            callInitiatorId,
-            callInitiatorName,
-            callOpponents,
-            callPhoto,
-            userInfo
-        )
+
+        if (isApplicationForeground(applicationContext)) {
+            Log.d(TAG, "[processInviteCallEvent] skip showCallNotification because app is in foreground")
+        } else {
+            showCallNotification(
+                applicationContext,
+                callId,
+                callType,
+                callInitiatorId,
+                callInitiatorName,
+                callOpponents,
+                callPhoto,
+                userInfo
+            )
+        }
 
         saveCallState(applicationContext, callId, CALL_STATE_PENDING)
         saveCallData(applicationContext, callId, data)
